@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USD to KRW Exchange Rate Predictor</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="../static/css/styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -13,11 +14,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="form-container">
-                <h1 class="text-center mb-4">USD to KRW Exchange Rate Predictor</h1>
+                <h1 class="text-center mb-4">Convert USD to KRW</h1>
                 <form id="predictionForm">
                     <div class="form-group">
                         <label for="timestamp">Enter Timestamp:</label>
-                        <input type="datetime-local" id="timestamp" name="timestamp" class="form-control" required>
+                        <input type="date" id="timestamp" name="timestamp" class="form-control" required>
                         <small id="timestampHelp" class="form-text text-muted">Please enter a valid timestamp.</small>
                     </div>
                     <button type="submit" class="btn btn-predict btn-block">Predict</button>

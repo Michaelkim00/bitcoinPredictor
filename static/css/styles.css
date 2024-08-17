@@ -1,27 +1,33 @@
 body {
-    padding-top: 30px; /* Add padding to the top of the body */
+    font-family: 'Roboto', sans-serif;
+    background-color: white;
+    padding: 20px;
 }
-
-.container {
-    margin-top: 50px; /* Add margin to the top of the container */
-}
-
 .form-container {
-    max-width: 800px;
-    margin: auto;
-    background-color: #f9f9f9;
+    background-color: #fff;
     padding: 30px;
+    margin-top: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
 }
-
+.form-group {
+    text-align: left;
+}
 .btn-predict {
     background-color: #007bff;
-    color: #fff;
-    border: none;
-    margin-top: 10px; /* Add margin to the top of the button */
+    display: inline-block;
+    /*width: 50%;*/
+    color: white;
+    transition: background-color 0.3s;
 }
-
 .btn-predict:hover {
     background-color: #0056b3;
+    color: white;
+}
+#predictionResult {
+    margin-top: 20px;
+}
+#predictionChart {
+    margin-top: 30px;
 }

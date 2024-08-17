@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from joblib import load
 import numpy as np
+import datetime
 
 app = Flask(__name__)
 
@@ -18,30 +19,33 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    timestamp = pd.to_datetime(request.form['timestamp'])
-    timestamp_ms = int(timestamp.timestamp() * 1000)  # Convert timestamp to milliseconds
+    date_str = request.form['timestamp']  # Get date from form
+    clicked_date = pd.to_datetime(date_str)  # Convert date string to datetime object
+    current_date = datetime.datetime.now()  # Get current date
 
-    # Scale the input as done during training
-    scaled_timestamp = scaler.transform(np.array([[timestamp_ms]]))
+    # Generate prediction range from current date to clicked date
+    prediction_range = pd.date_range(start=current_date, end=clicked_date, freq='D')
 
-    # Make prediction
-    prediction = model.predict(scaled_timestamp)[0]
+    # Convert timestamps to milliseconds
+    prediction_timestamps_ms = [int(ts.timestamp() * 1000) for ts in prediction_range]
 
-    # Fetch actual data points for the prediction
-    actual_data = df.loc[df.index <= timestamp]
-    timestamps = actual_data.index.strftime('%Y-%m-%d').tolist()
+    # Scale the input timestamps
+    scaled_timestamps = scaler.transform(np.array(prediction_timestamps_ms).reshape(-1, 1))
+
+    # Make predictions
+    predicted_prices_line = model.predict(scaled_timestamps)
+
+    # Fetch actual data points up to the clicked date
+    actual_data = df.loc[df.index <= clicked_date]
+    actual_timestamps = actual_data.index.strftime('%Y-%m-%d').tolist()
     actual_prices = actual_data['ExchangeRate'].tolist()
 
-    # Generate prediction line data
-    timestamps_line = pd.date_range(start=timestamp, periods=100, freq='D')
-    predicted_prices_line = model.predict(scaler.transform([[int(ts.timestamp() * 1000)] for ts in timestamps_line]))
-
     return jsonify({
-        'predicted_price': prediction,
-        'timestamps': timestamps,
+        'predicted_prices_line': predicted_prices_line.tolist(),
+        'timestamps_line': prediction_range.strftime('%Y-%m-%d').tolist(),
         'actual_prices': actual_prices,
-        'timestamps_line': timestamps_line.strftime('%Y-%m-%d').tolist(),
-        'predicted_prices_line': predicted_prices_line.tolist()
+        'timestamps': actual_timestamps,
+        'predicted_price': predicted_prices_line[-1]  # The last prediction
     })
 
 if __name__ == '__main__':
