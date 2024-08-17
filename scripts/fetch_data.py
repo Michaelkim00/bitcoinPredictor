@@ -31,6 +31,5 @@ def fetch_exchange_rate_data(api_key):
     df.to_csv('../data/exchange_rates.csv', index=False)
 
 if __name__ == "__main__":
-    # Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
     api_key = 'UNQ3Q39U78AA4EED'
     fetch_exchange_rate_data(api_key)

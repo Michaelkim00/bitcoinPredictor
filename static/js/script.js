@@ -88,7 +88,7 @@ function updateChart(labels, actualPrices, futureLabels, futurePredictedPrices) 
                             labelString: 'Date'
                         },
                         ticks: {
-                            source: 'auto'  // This will ensure that only the formatted dates are displayed
+                            source: 'auto'  // Ensure that only the formatted dates are displayed
                         }
                     }],
                     yAxes: [{

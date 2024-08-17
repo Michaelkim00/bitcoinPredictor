@@ -10,7 +10,7 @@ app = Flask(__name__)
 model = load('models/exchange_rate_predictor.joblib')
 scaler = load('models/scaler.joblib')
 
-# Load the actual data (assuming you have it stored in a CSV file)
+# Load the actual data
 df = pd.read_csv('data/exchange_rates.csv', parse_dates=['Timestamp'], index_col='Timestamp')
 
 @app.route('/', methods=['GET'])
